@@ -1,0 +1,32 @@
+meta {
+  name: Crear Nueva Mascota
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/mascotas
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{tokenAdmin}}
+}
+
+body:json {
+  { "nombre": "[NOMBRE_DE_LA_MASCOTA]",
+   "especie": "Perro",
+   "raza": "[RAZA_O_MESTIZO]", 
+  "edad": 2,
+   "sexo": "Hembra",
+   "fotoUrl": null,
+   "chip": null } 
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  forwardAuthorizationHeader: false
+}

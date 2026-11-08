@@ -1,0 +1,44 @@
+meta {
+  name: 09b Mascota inválida - validar edad
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/mascotas
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "nombre": "Poli",
+    "especie": "Perro",
+    "raza": "Chihuahua",
+    "edad": -5,
+    "sexo": "Hembra",
+    "fotoUrl": null,
+    "chip": null
+  }
+}
+
+tests {
+  test("400 - rechaza una edad fuera del rango permitido", function() {
+    expect(res.status).to.equal(400);
+  });
+  test("muestra un mensaje claro para la edad", function() {
+    expect(res.body.title).to.equal("Datos inválidos");
+    expect(res.body.errors.edad[0]).to.equal("La edad debe estar entre 0 y 20 años.");
+  });
+  test("no solicita estado general al registrar una mascota", function() {
+    expect(res.body.errors).to.not.have.property("estadoGeneral");
+  });
+}

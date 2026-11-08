@@ -1,0 +1,29 @@
+meta {
+  name: 02b Solicitudes lista
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/solicitudes/
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{tokenAdoptante}}
+}
+
+tests {
+  
+  test("La consulta responde 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("Devuelve una solicitud con ID", function() {
+    const solicitud = res.getBody();
+    expect(solicitud.id).to.be.a("string").and.not.empty;
+  });
+  
+  
+}
